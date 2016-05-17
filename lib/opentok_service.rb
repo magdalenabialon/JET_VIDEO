@@ -8,7 +8,7 @@ class OpentokService
   end
 
   def generate_token
-    create_session unless @room.session_id.present?
+    create_session
     role = :moderator
     @token = @opentok.generate_token @room.session_id, {role: role}
 
