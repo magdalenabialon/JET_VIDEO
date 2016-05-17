@@ -1,24 +1,18 @@
-    
-<div class="video_conf">
-  <script src="http://code.jquery.com/jquery.js"></script>
-  <script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script>
-  <script type="text/javascript">
 
-   var apiKey    = "#{Rails.application.secrets.opentok_api_key}";
-   var sessionId = "<%= @room.session_id %>";
-   var token     = "<%= @opentok %>";
-   var session = OT.initSession(apiKey, sessionId);
-   session.on("streamCreated", function(event) {
+  <script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script>
+  <script charset="utf-8">
+    var apiKey    = "#{Rails.application.secrets.opentok_api_key}";
+    var sessionId = "<%= @room.session_id %>";
+    var token     = "<%= @opentok %>";
+    var session = OT.initSession(apiKey, sessionId);
+    session.on("streamCreated", function(event) {
      session.subscribe(event.stream);
-   });
-   session.connect(token, function(error) {
+    });
+    session.connect(token, function(error) {
      var publisher = OT.initPublisher();
      session.publish(publisher);
-   });
-  </script>
-  <script>
-  </script>    
-</div>
+    });
+  </script> 
 
 <p id="notice"><%= notice %></p>
 
