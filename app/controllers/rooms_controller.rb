@@ -6,7 +6,6 @@ class RoomsController < ApplicationController
   end
 
   def show
-    binding.pry
     @opentok = OpentokService.new(@room)
     @opentok.generate_token
   end
