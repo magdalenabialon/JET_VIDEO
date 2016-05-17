@@ -4,9 +4,9 @@
   <script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script>
   <script type="text/javascript">
 
-   var apiKey    = "45590892";
-   var sessionId = "<%=@session.session_id %>";
-   var token     = "<%=@opentok %>";
+   var apiKey    = "#{Rails.application.secrets.opentok_api_key}";
+   var sessionId = "<%= @room.session_id %>";
+   var token     = "<%= @opentok %>";
    var session = OT.initSession(apiKey, sessionId);
    session.on("streamCreated", function(event) {
      session.subscribe(event.stream);
@@ -30,11 +30,6 @@
 <p>
   <strong>Description:</strong>
   <%= @room.description %>
-</p>
-
-<p>
-  <strong>Session:</strong>
-  <%= @room.session_id %>
 </p>
 
 <%= link_to 'Edit', edit_room_path(@room) %> |

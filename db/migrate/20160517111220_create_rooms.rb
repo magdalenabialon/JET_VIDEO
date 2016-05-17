@@ -4,6 +4,7 @@ class CreateRooms < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.string :session_id
+      t.string :token
 
       t.timestamps null: false
     end

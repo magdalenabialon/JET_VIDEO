@@ -6,9 +6,8 @@ class RoomsController < ApplicationController
   end
 
   def show
-    @opentok = OpentokService.create_opentok
-    @session = @opentok.create_session
-    @room.session_id = @session.session_id
+    @opentok = OpentokService.new(@room)
+    @opentok.generate_token
   end
 
   def new
@@ -54,7 +53,7 @@ class RoomsController < ApplicationController
 
   private
     def set_room
-      @room = current_user.Room.find(params[:id])
+      @room = Room.find(params[:id])
     end
 
     def room_params
