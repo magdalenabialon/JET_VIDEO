@@ -1,36 +1,63 @@
 class RoomsController < ApplicationController
-  before_filter :config_opentok, except: [:index]
+  before_action :set_room, only: [:show, :edit, :update, :destroy]
 
   def index
-    @rooms = Room.where(public: true).order("created_at DESC")
-    @new_room = Room.new
+    @rooms = Room.all
+  end
+
+  def show
+    @opentok = OpentokService.create_opentok
+    @session = @opentok.create_session
+    @room.session_id = @session.session_id
+  end
+
+  def new
+    @room = Room.new
+  end
+
+  def edit
   end
 
   def create
-    session = @opentok.create_session request.remote_addr
-    params[:room][:sessionId] = session.session_id
-
-    @new_room = Room.new(params[:room])
+    @room = Room.new(room_params)
 
     respond_to do |format|
-      if @new_room.save
-        format.html { redirect_to("/party"+@new_room.id.to_s) }
+      if @room.save
+        format.html { redirect_to @room, notice: 'Room was successfully created.' }
+        format.json { render :show, status: :created, location: @room }
       else
-        format.html { render controller: 'rooms', action: "index" }
+        format.html { render :new }
+        format.json { render json: @room.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  def party
-    @room = Room.find(params[:id])
-
-    @tok_token = @opentok.generate_token session_id: @room.sessionId
+  def update
+    respond_to do |format|
+      if @room.update(room_params)
+        format.html { redirect_to @room, notice: 'Room was successfully updated.' }
+        format.json { render :show, status: :ok, location: @room }
+      else
+        format.html { render :edit }
+        format.json { render json: @room.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
+  def destroy
+    @room.destroy
+    respond_to do |format|
+      format.html { redirect_to rooms_url, notice: 'Room was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
 
   private
-    def config_opentok
-      if @opentok.nil?
-        @opentok = OpenTok::OpenTokSDK.new "45590892", "839a5069c7ae37f6ab1b5c3d4be8abb50f63f8a6"
+    def set_room
+      @room = current_user.Room.find(params[:id])
+    end
+
+    def room_params
+      params.require(:room).permit(:name, :description, :session_id)
     end
 end

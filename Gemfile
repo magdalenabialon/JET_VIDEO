@@ -14,6 +14,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem "opentok", "~> 2.3"
 
+gem 'devise'
+
+gem "pry"
+
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails'

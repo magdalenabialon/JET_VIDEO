@@ -2,8 +2,8 @@ class CreateRooms < ActiveRecord::Migration
   def change
     create_table :rooms do |t|
       t.string :name
-      t.string :sessionId
-      t.boolean :public
+      t.text :description
+      t.string :session_id
 
       t.timestamps null: false
     end

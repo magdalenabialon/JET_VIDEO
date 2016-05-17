@@ -1,0 +1,41 @@
+    
+<div class="video_conf">
+  <script src="http://code.jquery.com/jquery.js"></script>
+  <script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script>
+  <script type="text/javascript">
+
+   var apiKey    = "45590892";
+   var sessionId = "<%=@session.session_id %>";
+   var token     = "<%=@opentok %>";
+   var session = OT.initSession(apiKey, sessionId);
+   session.on("streamCreated", function(event) {
+     session.subscribe(event.stream);
+   });
+   session.connect(token, function(error) {
+     var publisher = OT.initPublisher();
+     session.publish(publisher);
+   });
+  </script>
+  <script>
+  </script>    
+</div>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @room.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @room.description %>
+</p>
+
+<p>
+  <strong>Session:</strong>
+  <%= @room.session_id %>
+</p>
+
+<%= link_to 'Edit', edit_room_path(@room) %> |
+<%= link_to 'Back', rooms_path %>

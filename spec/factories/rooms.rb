@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :room do
     name "MyString"
-    sessionId "MyString"
-    public false
+    description "MyText"
+    session_id "MyString"
   end
 end

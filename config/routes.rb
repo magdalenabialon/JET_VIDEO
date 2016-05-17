@@ -1,12 +1,8 @@
 Rails.application.routes.draw do
 
-  get 'rooms/index'
+  devise_for :users
+  devise_for :installs
+  resources :rooms
 
-  get 'rooms/create'
-
-  get 'rooms/party'
-
-  get 'rooms/config_opentok'
-
-  root 'welcome#index'
+  root :to => "rooms#index"
 end

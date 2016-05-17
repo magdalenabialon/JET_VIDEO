@@ -1,28 +1,31 @@
-<div id=”newRoom”>
-<fieldset>
-<legend>Start a new party room</legend>
-<%= form_for(@new_room) do |f| %>
-Party Name: <%= f.text_field :name %><br/><br/>
-Public? <%= f.check_box :public %><br/><br/>
+<p id="notice"><%= notice %></p>
 
-<%= f.submit %>
-<% end %>
-</fieldset>
-</div>
+<h1>Listing Rooms</h1>
 
-<fieldset>
-<legend>Existing party rooms</legend>
-<table cellpadding=”2″ cellspacing=”5″>
-<tr>
-<th>Name</th>
-<th>Started</th>
-</tr>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Session</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
 
-<% @rooms.each do |room| %>
-<tr>
-<td align=”center” width=”300px”><a href=”/party/<%= room.id %>”><%= room.name %></a></td>
-<td><%= room.created_at %></td>
-</tr>
-<% end %>
+  <tbody>
+    <% @rooms.each do |room| %>
+      <tr>
+        <td><%= room.name %></td>
+        <td><%= room.description %></td>
+        <td><%= room.session_id %></td>
+        <td><%= link_to 'Show', room %></td>
+        <td><%= link_to 'Edit', edit_room_path(room) %></td>
+        <td><%= link_to 'Destroy', room, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
-</fieldset>
+
+<br>
+
+<%= link_to 'New Room', new_room_path %>
