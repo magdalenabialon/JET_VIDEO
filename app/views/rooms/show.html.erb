@@ -2,8 +2,8 @@
   <script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script>
   <script charset="utf-8">
     var apiKey    = "#{Rails.application.secrets.opentok_api_key}";
-    var sessionId = "<%= @room.session_id %>";
-    var token     = "<%= @opentok %>";
+    var sessionId = "<%= @session.session_id %>";
+    var token     = "<%= @token %>";
     var session = OT.initSession(apiKey, sessionId);
     session.on("streamCreated", function(event) {
      session.subscribe(event.stream);

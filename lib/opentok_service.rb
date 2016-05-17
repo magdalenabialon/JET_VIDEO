@@ -1,23 +1,14 @@
 require "opentok"
 
 class OpentokService
-  def initialize(room)
+  def self.create(room)
     @room = room
     @opentok = OpenTok::OpenTok.new("#{Rails.application.secrets.opentok_api_key}", 
                                     "#{Rails.application.secrets.opentok_secret}")
-  end
 
-  def generate_token
-    create_session
-    role = :moderator
-    @token = @opentok.generate_token @room.session_id, {role: role}
+    @session = @opentok.create_session
+    @token = @opentok.generate_token @room.session_id, {role: :moderator}
 
-    @room.update_attributes token: @token
-  end
-
-  def create_session
-    tok_session = @opentok.create_session
-
-    @room.update_attributes session_id: tok_session.session_id
+    @room.update_attributes session_id: @session.session_id, token: @token
   end
 end
